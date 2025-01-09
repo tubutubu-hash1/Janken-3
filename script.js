@@ -1,8 +1,6 @@
 // 結果を保存する配列
 const results = [];
 const playerMoves = []; // プレイヤーの手の履歴を保存
-let aiSuccessCount = 0; // AIの予測成功数
-let aiFailureCount = 0; // AIの予測失敗数
 
 // ランダムに手を選択
 function randomMove() {
@@ -72,7 +70,6 @@ function decideComputerMove(moves, order = 3) {
     // マルコフ連鎖と頻度ベースの予測を併用
     const predictedMove = predictedMoveByMarkov || predictedMoveByFrequency;
     const counterMoves = { "グー": "パー", "チョキ": "グー", "パー": "チョキ" };
-
     return counterMoves[predictedMove] || randomMove();
 }
 
@@ -94,15 +91,7 @@ function judge(player, computer) {
 // ゲームを実行
 function playGame(playerHand) {
     const computerHand = decideComputerMove(playerMoves, 3);
-    const predictedMove = predictNextMove(playerMoves, 3); // AIの予測
     const result = judge(playerHand, computerHand);
-
-    // AIの予測成功/失敗を記録
-    if (predictedMove === playerHand) {
-        aiSuccessCount++;
-    } else {
-        aiFailureCount++;
-    }
 
     // 結果を画面に表示
     document.getElementById('result').textContent = `あなた: ${playerHand}, AI: ${computerHand}, 結果: ${result}`;
@@ -130,8 +119,6 @@ function updateStatistics() {
     document.getElementById('draw-count').textContent = `引き分け数: ${draws}`;
     document.getElementById('loss-count').textContent = `負け数: ${losses}`;
     document.getElementById('win-rate').textContent = `勝率（引き分け除外）: ${winRate}%`;
-    document.getElementById('ai-success-count').textContent = `AI予測成功数: ${aiSuccessCount}`;
-    document.getElementById('ai-failure-count').textContent = `AI予測失敗数: ${aiFailureCount}`;
 }
 
 // 結果をExcelファイルで保存
@@ -150,8 +137,6 @@ function downloadResults() {
 function resetGame() {
     results.length = 0;
     playerMoves.length = 0;
-    aiSuccessCount = 0;
-    aiFailureCount = 0;
     document.getElementById('result').textContent = '';
     updateStatistics();
 }
