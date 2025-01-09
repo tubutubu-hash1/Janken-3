@@ -92,22 +92,9 @@ function judge(player, computer) {
     }
 }
 
-// 勝敗を判定
-function determineWinner(playerHand, aiHand) {
-    if (playerHand === aiHand) return '引き分け';
-    if (
-        (playerHand === 'グー' && aiHand === 'チョキ') ||
-        (playerHand === 'チョキ' && aiHand === 'パー') ||
-        (playerHand === 'パー' && aiHand === 'グー')
-    ) {
-        return '勝ち';
-    }
-    return '負け';
-}
-
 // ゲームを実行
 function playGame(playerHand) {
-    const aiHand = getAIHand();
+    const aiHand = getcomputer();
     const result = determineWinner(playerHand, aiHand);
 
     // 結果を画面に表示
