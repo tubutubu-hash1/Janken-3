@@ -1,6 +1,11 @@
 // 結果を保存する配列
 const results = [];
-
+let moves = [];
+let history = [];
+let win = 0;
+let lose = 0;
+let draw = 0;
+let games = 0; // 試合回数
 // AIの手をランダムに生成
 function randomMove() {
     const moves = ["グー", "チョキ", "パー"];
